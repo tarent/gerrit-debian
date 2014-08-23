@@ -1,0 +1,9 @@
+*.debhelper
+/*.dsc
+/*.deb
+/*.tar.gz
+/*.changes
+*.debhelper.log
+*.substvars
+/debian/gerrit/*
+/debian/files
