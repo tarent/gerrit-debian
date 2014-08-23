@@ -4,11 +4,23 @@ This is a package of [Gerrit](http://code.google.com/p/gerrit/) for [Debian GNU/
 
 ## How to build the package
 
-* First make sure you have **build-essential**, **git-core** and **openjdk-6-jre-headless**  package installed on your system.
-* Clone the package repository for [gerrit-debian](https://github.com/dnaeon/gerrit-debian)
+Clone the package repository and change dir
+
+    $ git clone git@github.com:tarent/gerrit-debian.git
+    $ cd gerrit-debian
+
+Build the Docker image for your distribution (currently only Debian Wheezy supported)
+
+    $ docker build --rm -t gerrit-package-builder:wheezy docker-wheezy
 
 Now building the package is easy as executing the command below:
 
-	$ cd /path/to/gerrit-debian
-	$ dpkg-buildpackage -us -uc
+    $ docker run -i -t --rm \
+          -v $(pwd):/source -v $(pwd):/build-output \
+          gerrit-package-builder:wheezy
 
+You can add arbitrary arguments to `dpkg-buildpackage` by appending them to the command above, e.g:
+
+    $ docker run -i -t --rm \
+          -v $(pwd):/source -v $(pwd):/build-output \
+          gerrit-package-builder:wheezy -sn -b -d
